@@ -1,0 +1,33 @@
+{
+  "name": "rimac-test",
+  "version": "1.0.0",
+  "description": "Project based on NextJS and Material-UI",
+  "scripts": {
+    "lint": "standard",
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lagapog/rimac-test"
+  },
+  "author": "Luis Agapito",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lagapog/rimac-test/issues"
+  },
+  "homepage": "https://github.com/lagapog/rimac-test#readme",
+  "dependencies": {
+    "@material-ui/core": "^4.11.4",
+    "@material-ui/icons": "^4.11.2",
+    "clsx": "^1.1.1",
+    "next": "^10.2.0",
+    "prop-types": "^15.7.2",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
+  },
+  "devDependencies": {
+    "standard": "^16.0.3"
+  }
+}
