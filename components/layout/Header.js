@@ -1,8 +1,9 @@
-import { makeStyles } from '@material-ui/core/styles'
+import { makeStyles, useTheme } from '@material-ui/core/styles'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import Container from '@material-ui/core/Container'
 import Typography from '@material-ui/core/Typography'
+import useMediaQuery from '@material-ui/core/useMediaQuery'
 import PhoneIcon from '@material-ui/icons/Phone'
 
 const useStyles = makeStyles(theme => ({
@@ -15,10 +16,14 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     alignItems: 'center',
     '&__text': {
+      color: '#676F8F',
       fontFamily: 'Roboto',
       fontSize: 12,
       fontWeight: 400,
-      marginRight: theme.spacing(3)
+      marginRight: theme.spacing(3),
+      [theme.breakpoints.down('sm')]: {
+        display: 'none'
+      }
     },
     '&__icon': {
       color: theme.palette.secondary.main,
@@ -36,8 +41,10 @@ const useStyles = makeStyles(theme => ({
 
 const Header = () => {
   const classes = useStyles()
+  const theme = useTheme()
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
   return (
-    <AppBar color='transparent' elevation={0}>
+    <AppBar color='transparent' elevation={0} position='absolute'>
       <Toolbar>
         <Container className={classes.container}>
           <img src='/logo.svg' />
@@ -47,7 +54,7 @@ const Header = () => {
             </Typography>
             <PhoneIcon className={`${classes.contact}__icon`} />
             <a href='tel:014116001' className={`${classes.contact}__number`}>
-              (01) 411 6001
+              {isMobile ? 'Llámanos' : '(01) 411 6001'}
             </a>
           </div>
         </Container>
