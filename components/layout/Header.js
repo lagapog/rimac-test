@@ -5,8 +5,15 @@ import Container from '@material-ui/core/Container'
 import Typography from '@material-ui/core/Typography'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
 import PhoneIcon from '@material-ui/icons/Phone'
+import PropTypes from 'prop-types'
 
 const useStyles = makeStyles(theme => ({
+  root: {
+    backgroundColor: ({ isLogin }) => isLogin ? 'transparent' : '#fff',
+    borderBottom: ({ isLogin }) => isLogin
+      ? '0'
+      : '1px solid #E4E8F7'
+  },
   container: {
     display: 'flex',
     alignItems: 'center',
@@ -39,12 +46,16 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-const Header = () => {
-  const classes = useStyles()
+const Header = ({ isLogin = false }) => {
+  const classes = useStyles({ isLogin })
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
   return (
-    <AppBar color='transparent' elevation={0} position='absolute'>
+    <AppBar
+      className={classes.root}
+      elevation={0}
+      position='absolute'
+    >
       <Toolbar>
         <Container className={classes.container}>
           <img src='/logo.svg' />
@@ -61,6 +72,10 @@ const Header = () => {
       </Toolbar>
     </AppBar>
   )
+}
+
+Header.propTypes = {
+  headerWithBorder: PropTypes.bool
 }
 
 export default Header
