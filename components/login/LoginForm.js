@@ -7,6 +7,7 @@ import Checkbox from '@material-ui/core/Checkbox'
 import MenuItem from '@material-ui/core/MenuItem'
 import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
+import validator from 'validator'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -99,6 +100,18 @@ const LoginForm = () => {
   const handleChange = ev => {
     setData(prev => ({ ...prev, [ev.target.name]: ev.target.value }))
   }
+  const wrongDocumentNumber = () => {
+    const errors = !validator.isNumeric(data.documentNumber) || data.documentNumber.length !== 8
+    return data.documentNumber && errors
+  }
+  const wrongPhone = () => {
+    const errors = !validator.isNumeric(data.phone) || data.phone.length !== 9
+    return data.phone && errors
+  }
+  const wrongLicense = () => {
+    const errors = !validator.isAlphanumeric(data.licensePlate, 'en-US', { ignore: '-' })
+    return data.licensePlate && errors
+  }
   return (
     <div className={classes.root}>
       <div className={classes.form}>
@@ -108,6 +121,7 @@ const LoginForm = () => {
         <div className={`${classes.form}__fiedlgroup`}>
           <FormControl
             variant='outlined'
+            color='secondary'
             className={`${classes.form}__fiedlgroup__select`}
           >
             <Select
@@ -120,15 +134,19 @@ const LoginForm = () => {
             </Select>
           </FormControl>
           <TextField
+            color='secondary'
             variant='outlined'
             label='Nro de doc'
             value={data.documentNumber}
             name='documentNumber'
             onChange={handleChange}
             className={`${classes.form}__fiedlgroup__text`}
+            error={wrongDocumentNumber()}
+            helperText={wrongDocumentNumber() ? 'Formato incorrecto' : ''}
           />
         </div>
         <TextField
+          color='secondary'
           variant='outlined'
           label='Celular'
           value={data.phone}
@@ -136,8 +154,11 @@ const LoginForm = () => {
           onChange={handleChange}
           fullWidth
           className={`${classes.form}__field`}
+          error={wrongPhone()}
+          helperText={wrongPhone() ? 'Formato incorrecto' : ''}
         />
         <TextField
+          color='secondary'
           variant='outlined'
           label='Placa'
           value={data.licensePlate}
@@ -145,6 +166,8 @@ const LoginForm = () => {
           onChange={handleChange}
           fullWidth
           className={`${classes.form}__field`}
+          error={wrongLicense()}
+          helperText={wrongPhone() ? 'Formato incorrecto' : ''}
         />
         <div className={`${classes.form}__terms`}>
           <Checkbox

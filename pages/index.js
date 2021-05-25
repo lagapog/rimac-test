@@ -1,10 +1,11 @@
-import Typography from '@material-ui/core/Typography'
+import Container from 'components/layout/Container'
+import LoginContainer from 'components/login/LoginContainer'
 
 const Home = () => {
   return (
-    <div>
-      <Typography>Hello</Typography>
-    </div>
+    <Container isLogin>
+      <LoginContainer />
+    </Container>
   )
 }
 
