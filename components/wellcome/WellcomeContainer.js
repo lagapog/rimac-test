@@ -84,7 +84,7 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-const WellcomeContainer = () => {
+const WellcomeContainer = ({ email }) => {
   const classes = useStyles()
   return (
     <div className={classes.root}>
@@ -102,7 +102,7 @@ const WellcomeContainer = () => {
         </Typography>
         <Typography className={`${classes.info}__text`}>
           Enviaremos la confirmación de compra de tu Plan Vehícular Tracking a tu correo:<br />
-          <b>joel.sanchez@gmail.com</b>
+          <b>{email}</b>
         </Typography>
         <Button
           variant='contained'

@@ -1,3 +1,4 @@
+import { useContext } from 'react'
 import { makeStyles, withStyles } from '@material-ui/core/styles'
 import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
@@ -10,6 +11,7 @@ import RangeInput from 'components/form/RangeInput'
 import BackIcon from 'components/icons/BackIcon'
 import DropdownIcon from 'components/icons/DropdownIcon'
 import PropTypes from 'prop-types'
+import { Store } from 'store/reducer'
 import { useRouter } from 'next/router'
 
 const BackButton = withStyles(theme => ({
@@ -160,7 +162,7 @@ const useStyles = makeStyles(theme => ({
 const StepOne = ({ setActiveStep, data, handleChange }) => {
   const classes = useStyles()
   const router = useRouter()
-
+  const { state } = useContext(Store)
   return (
     <div className={classes.root}>
       <div className={classes.container}>
@@ -171,7 +173,7 @@ const StepOne = ({ setActiveStep, data, handleChange }) => {
           Volver
         </BackButton>
         <Typography className={`${classes.container}__title`}>
-          ¡Hola, <span>Juan!</span>
+          ¡Hola, <span>{state.user.name}!</span>
         </Typography>
         <Typography className={`${classes.container}__text`}>
           Completa los datos de tu auto
@@ -253,7 +255,13 @@ const StepOne = ({ setActiveStep, data, handleChange }) => {
               color='primary'
               disableElevation
               className={`${classes.form}__button`}
-              onClick={() => setActiveStep(1)}
+              onClick={() => {
+                if (!data.brand || !data.year) {
+                  alert('Todos los campos son requeridos')
+                } else {
+                  setActiveStep(1)
+                }
+              }}
             >
               Continuar
               <ChevronRightIcon />

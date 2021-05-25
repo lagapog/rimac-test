@@ -8,6 +8,12 @@
     "build": "next build",
     "start": "next start"
   },
+  "standard": {
+    "global": [
+      "fetch",
+      "alert"
+    ]
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/lagapog/rimac-test"

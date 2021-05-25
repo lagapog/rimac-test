@@ -1,13 +1,17 @@
-import { useState } from 'react'
+import { useState, useContext } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
 import FormControl from '@material-ui/core/FormControl'
 import Select from '@material-ui/core/Select'
 import Checkbox from '@material-ui/core/Checkbox'
+import CircularProgress from '@material-ui/core/CircularProgress'
 import MenuItem from '@material-ui/core/MenuItem'
 import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
 import validator from 'validator'
+import { useRouter } from 'next/router'
+import { Store } from 'store/reducer'
+import { fetchUser, setLicensePlate } from 'store/actions'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -81,6 +85,9 @@ const useStyles = makeStyles(theme => ({
       fontWeight: 700,
       fontSize: 14,
       borderRadius: 8,
+      '& svg': {
+        color: '#fff'
+      },
       [theme.breakpoints.down('sm')]: {
         width: '100%'
       }
@@ -89,8 +96,11 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const LoginForm = () => {
+  const router = useRouter()
   const classes = useStyles()
+  const { dispatch } = useContext(Store)
   const [terms, setTerms] = useState(false)
+  const [loading, setLoading] = useState(false)
   const [data, setData] = useState({
     documentType: 'DNI',
     documentNumber: '',
@@ -102,15 +112,27 @@ const LoginForm = () => {
   }
   const wrongDocumentNumber = () => {
     const errors = !validator.isNumeric(data.documentNumber) || data.documentNumber.length !== 8
-    return data.documentNumber && errors
+    return Boolean(data.documentNumber) && errors
   }
   const wrongPhone = () => {
     const errors = !validator.isNumeric(data.phone) || data.phone.length !== 9
-    return data.phone && errors
+    return Boolean(data.phone) && errors
   }
   const wrongLicense = () => {
     const errors = !validator.isAlphanumeric(data.licensePlate, 'en-US', { ignore: '-' })
-    return data.licensePlate && errors
+    return Boolean(data.licensePlate) && errors
+  }
+  const sendData = async () => {
+    const ok = !wrongDocumentNumber() && !wrongPhone() && !wrongLicense() && terms
+    if (!ok) {
+      alert('Todos los campos son requeridos')
+    } else {
+      setLoading(true)
+      dispatch(setLicensePlate(data.licensePlate))
+      await fetchUser(dispatch)
+      setLoading(false)
+      router.push('/formulario')
+    }
   }
   return (
     <div className={classes.root}>
@@ -167,7 +189,7 @@ const LoginForm = () => {
           fullWidth
           className={`${classes.form}__field`}
           error={wrongLicense()}
-          helperText={wrongPhone() ? 'Formato incorrecto' : ''}
+          helperText={wrongLicense() ? 'Formato incorrecto' : ''}
         />
         <div className={`${classes.form}__terms`}>
           <Checkbox
@@ -187,8 +209,9 @@ const LoginForm = () => {
           color='primary'
           disableElevation
           className={`${classes.form}__button`}
+          onClick={sendData}
         >
-          COTÍZALO
+          {loading ? <CircularProgress /> : 'COTÍZALO'}
         </Button>
       </div>
     </div>

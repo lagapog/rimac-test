@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import { makeStyles, withStyles } from '@material-ui/core/styles'
 import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
@@ -10,6 +10,7 @@ import DoneIcon from '@material-ui/icons/Done'
 import CustomTabs from 'components/form/CustomTabs'
 import BackIcon from 'components/icons/BackIcon'
 import PropTypes from 'prop-types'
+import { Store } from 'store/reducer'
 import { useRouter } from 'next/router'
 
 const BackButton = withStyles(theme => ({
@@ -165,6 +166,7 @@ const useStyles = makeStyles(theme => ({
 const StepTwo = ({ setActiveStep, data, handleChange }) => {
   const classes = useStyles()
   const router = useRouter()
+  const { state } = useContext(Store)
   const [total, setTotal] = useState(20)
   useEffect(() => {
     let amount = 20
@@ -192,7 +194,7 @@ const StepTwo = ({ setActiveStep, data, handleChange }) => {
           <div className={`${classes.form}__resume`}>
             <div className={`${classes.form}__resume__card`}>
               <Typography className={`${classes.form}__resume__card__license`}>
-                Placa: C2U-114
+                Placa: {state.licensePlate}
               </Typography>
               <Typography className={`${classes.form}__resume__card__brand`}>
                 {`${data.brand} ${data.year}`}
@@ -267,7 +269,7 @@ const StepTwo = ({ setActiveStep, data, handleChange }) => {
               color='primary'
               disableElevation
               className={`${classes.form}__chart__button`}
-              onClick={() => router.push('/')}
+              onClick={() => router.push('/bienvenida')}
             >
               Lo Quiero
             </Button>
