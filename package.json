@@ -6,7 +6,7 @@
     "lint": "standard",
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start -p $PORT"
   },
   "standard": {
     "global": [
