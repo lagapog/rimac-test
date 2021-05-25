@@ -6,6 +6,7 @@ import TextField from '@material-ui/core/TextField'
 import MenuItem from '@material-ui/core/MenuItem'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
 import Radio from '@material-ui/core/Radio'
+import Hidden from '@material-ui/core/Hidden'
 import ChevronRightIcon from '@material-ui/icons/ChevronRight'
 import RangeInput from 'components/form/RangeInput'
 import BackIcon from 'components/icons/BackIcon'
@@ -18,7 +19,10 @@ const BackButton = withStyles(theme => ({
   root: {
     color: '#A3ABCC',
     fontSize: 12,
-    marginBottom: theme.spacing(3)
+    marginBottom: theme.spacing(3),
+    [theme.breakpoints.down('sm')]: {
+      display: 'none'
+    }
   },
   startIcon: {
     marginRight: theme.spacing(2),
@@ -34,7 +38,13 @@ const useStyles = makeStyles(theme => ({
     paddingBottom: 100,
     display: 'flex',
     justifyContent: 'center',
-    alignItems: 'flex-start'
+    alignItems: 'flex-start',
+    [theme.breakpoints.down('sm')]: {
+      paddingTop: theme.spacing(5),
+      paddingBottom: theme.spacing(5),
+      paddingRight: theme.spacing(3),
+      paddingLeft: theme.spacing(3)
+    }
   },
   container: {
     width: '100%',
@@ -61,6 +71,9 @@ const useStyles = makeStyles(theme => ({
     display: 'grid',
     gridTemplateColumns: '1fr 260px',
     columnGap: theme.spacing(8),
+    [theme.breakpoints.down('sm')]: {
+      gridTemplateColumns: '100%'
+    },
     '&__select': {
       marginBottom: theme.spacing(2)
     },
@@ -71,9 +84,19 @@ const useStyles = makeStyles(theme => ({
       marginTop: theme.spacing(3),
       marginBottom: theme.spacing(5),
       borderBottom: '1px solid #E4E8F7',
+      [theme.breakpoints.down('sm')]: {
+        paddingBottom: theme.spacing(2),
+        marginBottom: theme.spacing(1),
+        display: 'block',
+        borderBottom: 0
+      },
       '&__control': {
         marginLeft: theme.spacing(4),
         marginRight: 0,
+        [theme.breakpoints.down('sm')]: {
+          marginRight: theme.spacing(4),
+          marginLeft: 0
+        },
         '& .MuiRadio-colorSecondary.Mui-checked': {
           color: '#43B748'
         }
@@ -89,9 +112,17 @@ const useStyles = makeStyles(theme => ({
       display: 'grid',
       gridTemplateColumns: 'auto 45%',
       columnGap: theme.spacing(3),
+      [theme.breakpoints.down('sm')]: {
+        gridTemplateColumns: '100%',
+        rowGap: theme.spacing(2)
+      },
       '&__label': {
         display: 'grid',
         gridTemplateColumns: 'repeat(2, 1fr)',
+        [theme.breakpoints.down('sm')]: {
+          width: 180,
+          rowGap: theme.spacing(1)
+        },
         '&__text': {
           fontWeight: 400,
           fontSize: 16,
@@ -128,6 +159,11 @@ const useStyles = makeStyles(theme => ({
     },
     '&__help': {
       width: '100%',
+      [theme.breakpoints.down('sm')]: {
+        backgroundColor: '#F7F8FC',
+        borderRadius: 8,
+        padding: theme.spacing(2)
+      },
       '&__title': {
         fontWeight: 700,
         fontSize: 12,
@@ -140,12 +176,27 @@ const useStyles = makeStyles(theme => ({
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
+        [theme.breakpoints.down('sm')]: {
+          display: 'grid',
+          gridTemplateColumns: 'auto 1fr',
+          gridTemplateRows: 'repeat(2, 1fr)',
+          columnGap: theme.spacing(1)
+        },
+        '&__image': {
+          [theme.breakpoints.down('sm')]: {
+            gridRow: '1 / 3'
+          }
+        },
         '&__text': {
           fontSize: 16,
           fontWeight: 400,
           color: '#494F66',
           width: 120,
-          marginBottom: theme.spacing(2)
+          marginBottom: theme.spacing(2),
+          [theme.breakpoints.down('sm')]: {
+            width: '100%',
+            marginBottom: 0
+          }
         }
       },
       '&__cta': {
@@ -153,7 +204,10 @@ const useStyles = makeStyles(theme => ({
         fontWeight: 700,
         fontSize: 10,
         textTransform: 'uppercase',
-        cursor: 'pointer'
+        cursor: 'pointer',
+        [theme.breakpoints.down('sm')]: {
+          gridColumn: '2 / 3'
+        }
       }
     }
   }
@@ -214,6 +268,19 @@ const StepOne = ({ setActiveStep, data, handleChange }) => {
               <MenuItem value='Ford'>Ford</MenuItem>
               <MenuItem value='BMW'>BMW</MenuItem>
             </TextField>
+            <Hidden mdUp>
+              <div className={`${classes.form}__help`}>
+                <div className={`${classes.form}__help__body`}>
+                  <img src='/car.svg' className={`${classes.form}__help__body__image`} />
+                  <Typography className={`${classes.form}__help__body__text`}>
+                    ¿No encuentras el modelo?
+                  </Typography>
+                  <Typography className={`${classes.form}__help__cta`}>
+                    clic aquí
+                  </Typography>
+                </div>
+              </div>
+            </Hidden>
             <div className={`${classes.form}__radiogroup`}>
               <Typography className={`${classes.form}__radiogroup__label`}>
                 ¿Tu auto es a gas?
@@ -267,20 +334,22 @@ const StepOne = ({ setActiveStep, data, handleChange }) => {
               <ChevronRightIcon />
             </Button>
           </div>
-          <div className={`${classes.form}__help`}>
-            <Typography className={`${classes.form}__help__title`}>
-              AYUDA
-            </Typography>
-            <div className={`${classes.form}__help__body`}>
-              <Typography className={`${classes.form}__help__body__text`}>
-                ¿No encuentras el modelo?
+          <Hidden smDown>
+            <div className={`${classes.form}__help`}>
+              <Typography className={`${classes.form}__help__title`}>
+                AYUDA
               </Typography>
-              <img src='/car.svg' />
+              <div className={`${classes.form}__help__body`}>
+                <Typography className={`${classes.form}__help__body__text`}>
+                  ¿No encuentras el modelo?
+                </Typography>
+                <img src='/car.svg' />
+              </div>
+              <Typography className={`${classes.form}__help__cta`}>
+                clic aquí
+              </Typography>
             </div>
-            <Typography className={`${classes.form}__help__cta`}>
-              clic aquí
-            </Typography>
-          </div>
+          </Hidden>
         </div>
       </div>
     </div>

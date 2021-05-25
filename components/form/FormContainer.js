@@ -35,7 +35,7 @@ const FormContainer = () => {
   }
   return (
     <div className={classes.root}>
-      <Stepper activeStep={activeStep} />
+      <Stepper activeStep={activeStep} setActiveStep={setActiveStep} />
       {activeStep === 0
         ? (
           <StepOne

@@ -17,7 +17,10 @@ const BackButton = withStyles(theme => ({
   root: {
     color: '#A3ABCC',
     fontSize: 12,
-    marginBottom: theme.spacing(3)
+    marginBottom: theme.spacing(3),
+    [theme.breakpoints.down('sm')]: {
+      display: 'none'
+    }
   },
   startIcon: {
     marginRight: theme.spacing(2),
@@ -33,7 +36,14 @@ const useStyles = makeStyles(theme => ({
     paddingBottom: 100,
     display: 'flex',
     justifyContent: 'center',
-    alignItems: 'flex-start'
+    alignItems: 'flex-start',
+    [theme.breakpoints.down('sm')]: {
+      paddingTop: theme.spacing(5),
+      paddingBottom: theme.spacing(5),
+      paddingRight: theme.spacing(3),
+      paddingLeft: theme.spacing(3),
+      backgroundColor: '#F7F8FC'
+    }
   },
   container: {
     width: '100%',
@@ -42,14 +52,23 @@ const useStyles = makeStyles(theme => ({
       fontSize: 40,
       fontWeight: 400,
       color: '#494F66',
-      marginBottom: theme.spacing(1)
+      marginBottom: theme.spacing(1),
+      [theme.breakpoints.down('sm')]: {
+        fontSize: 28,
+        paddingRight: theme.spacing(3),
+        paddingLeft: theme.spacing(3)
+      }
     },
     '&__text': {
       fontSize: 16,
       fontFamily: 'Roboto',
       fontWeight: 500,
       color: '#676F8F',
-      marginBottom: theme.spacing(4)
+      marginBottom: theme.spacing(4),
+      [theme.breakpoints.down('sm')]: {
+        paddingRight: theme.spacing(3),
+        paddingLeft: theme.spacing(3)
+      }
     }
   },
   form: {
@@ -57,6 +76,9 @@ const useStyles = makeStyles(theme => ({
     display: 'grid',
     gridTemplateColumns: '1fr 260px',
     columnGap: theme.spacing(8),
+    [theme.breakpoints.down('sm')]: {
+      gridTemplateColumns: '100%'
+    },
     '&__resume': {
       width: '100%',
       '&__card': {
@@ -72,6 +94,9 @@ const useStyles = makeStyles(theme => ({
         alignItems: 'flex-start',
         justifyContent: 'center',
         position: 'relative',
+        [theme.breakpoints.down('sm')]: {
+          backgroundColor: '#fff'
+        },
         '&__license': {
           fontFamily: 'Roboto',
           fontWeight: 400,
@@ -101,6 +126,16 @@ const useStyles = makeStyles(theme => ({
       },
       '&__tabs': {
         width: '100%',
+        [theme.breakpoints.down('sm')]: {
+          width: `calc(100% + ${theme.spacing(6)}px)`,
+          backgroundColor: '#fff',
+          marginLeft: theme.spacing(-3),
+          marginBottom: theme.spacing(3),
+          marginRight: theme.spacing(-3),
+          paddingTop: theme.spacing(2),
+          paddingLeft: theme.spacing(3),
+          paddingRight: theme.spacing(3)
+        },
         '&__title': {
           fontSize: 20,
           fontWeight: 400,
